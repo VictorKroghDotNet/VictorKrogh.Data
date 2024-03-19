@@ -23,6 +23,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="VictorKrogh.Data.Abstractions" Version="8.0.1" />
+		<PackageReference Include="VictorKrogh.Disposable" Version="8.0.3" />
 	</ItemGroup>
 
 </Project>
