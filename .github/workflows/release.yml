@@ -26,6 +26,9 @@ jobs:
       run: |
         echo "Run number: ${{ github.run_number }}"
 
+    - name: Add Github Package Registry
+      run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
+
     - name: Pack
       run: dotnet pack --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
       
