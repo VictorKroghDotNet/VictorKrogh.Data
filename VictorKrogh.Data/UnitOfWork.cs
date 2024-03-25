@@ -5,12 +5,12 @@ using VictorKrogh.Data.Repositories;
 
 namespace VictorKrogh.Data;
 
-internal sealed class UnitOfWork(IServiceProvider serviceProvider, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted) : Disposable, IUnitOfWork
+public sealed class UnitOfWork(IServiceProvider serviceProvider, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted) : Disposable, IUnitOfWork
 {
     public IsolationLevel IsolationLevel => isolationLevel;
     public bool IsCompleted { get; set; }
 
-    private IList<IProvider> Providers { get; set; } = new List<IProvider>();
+    private IList<IProvider> Providers { get; set; } = [];
 
     public void Commit()
     {
@@ -24,11 +24,7 @@ internal sealed class UnitOfWork(IServiceProvider serviceProvider, IsolationLeve
 
     public TProvider CreateProvider<TProvider>(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted) where TProvider : IProvider
     {
-        var providerFactory = serviceProvider.GetService<IProviderFactory<TProvider>>();
-        if (providerFactory is null)
-        {
-            throw new Exception($"No provider factory found for {typeof(TProvider).Name}");
-        }
+        var providerFactory = serviceProvider.GetService<IProviderFactory<TProvider>>() ?? throw new Exception($"No provider factory found for {typeof(TProvider).Name}");
 
         var provider = providerFactory.CreateProvider(isolationLevel);
 
