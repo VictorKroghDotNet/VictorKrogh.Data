@@ -5,14 +5,6 @@ using VictorKrogh.Data.Repositories;
 
 namespace VictorKrogh.Data;
 
-public interface IUnitOfWork : IProviderFactory, IDisposable
-{
-    IsolationLevel IsolationLevel { get; }
-    bool IsCompleted { get; }
-    void Commit();
-    TRepository GetRepository<TRepository>() where TRepository : IRepository;
-}
-
 internal sealed class UnitOfWork(IServiceProvider serviceProvider, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted) : Disposable, IUnitOfWork
 {
     public IsolationLevel IsolationLevel => isolationLevel;
