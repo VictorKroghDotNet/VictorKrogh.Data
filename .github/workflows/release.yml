@@ -25,8 +25,7 @@ jobs:
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
         - name: Test
-          run: |
-            echo "ls -l"
+          run: "ls -l"
 
         - name: Pack "VictorKrogh.Data"
           run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
