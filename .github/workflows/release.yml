@@ -29,11 +29,11 @@ jobs:
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
         - name: Pack "VictorKrogh.Data"
-          run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} --output "${{ github_workspace}}/${{ env.output_path }}" -p:BuildNumber="${{ github.run_number }}"
+          run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" -p:BuildNumber="${{ github.run_number }}"
           working-directory: "VictorKrogh.Data"
       
         - name: Pack "VictorKrogh.Data.EntityFrameworkCore"
-          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} --output "${{ github_workspace}}/${{ env.output_path }}" -p:BuildNumber="${{ github.run_number }}"
+          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" -p:BuildNumber="${{ github.run_number }}"
           working-directory: "VictorKrogh.Data.EntityFrameworkCore"
 
         - name: Test
