@@ -6,61 +6,83 @@ on:
 
 env: 
   configuration: Release
-  csproj_name: VictorKrogh.Data
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    checkout:
+        runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+        steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.1xx
+    build-data:
+        runs-on: ubuntu-latest
+        needs: checkout
+
+        steps:
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: 8.0.1xx
+
+        - name: Add Github Package Registry
+          run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
+
+        - name: Pack
+          run: dotnet pack "VictorKrogh.Data" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
       
-    - name: Another step
-      run: |
-        echo "Run number: ${{ github.run_number }}"
+        - name: Upload Build Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: ${{ env.csproj_name }}
+            path: "${{ env.csproj_name }}/bin/${{ env.configuration }}/*.nupkg"
 
-    - name: Add Github Package Registry
-      run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
+    build-data-efcore:
+        runs-on: ubuntu-latest
+        needs: checkout
 
-    - name: Pack
-      run: dotnet pack --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
+        steps:
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: 8.0.1xx
+
+        - name: Add Github Package Registry
+          run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
+
+        - name: Pack
+          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
       
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ env.csproj_name }}
-        path: "${{ env.csproj_name }}/bin/${{ env.configuration }}/*.nupkg"
+        - name: Upload Build Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: ${{ env.csproj_name }}
+            path: "${{ env.csproj_name }}/bin/${{ env.configuration }}/*.nupkg"
+            
+    publish:
+        runs-on: ubuntu-latest
+        needs: build
 
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Download NuGet Package Artifact
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: ${{ env.csproj_name }}
-          path: artifact
+        steps:
+            - name: Download NuGet Package Artifact
+              uses: actions/download-artifact@v3.0.2
+              with:
+                name: ${{ env.csproj_name }}
+                path: artifact
   
-      - name: Prep packages
-        run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
+            - name: Prep packages
+              run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
-      - name: Publish to Github Package Registry
-        run: dotnet nuget push "artifact/*.nupkg" --source "github" --api-key ${TOKEN} --skip-duplicate
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
+            - name: Publish to Github Package Registry
+              run: dotnet nuget push "artifact/*.nupkg" --source "github" --api-key ${TOKEN} --skip-duplicate
+              env:
+                TOKEN: ${{ secrets.TOKEN }}
           
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.TOKEN }}"
-          automatic_release_tag: "8.0.${{ github.run_number }}"
-          prerelease: false
-          files: "artifact/*"
+            - name: Create Release
+              uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                repo_token: "${{ secrets.TOKEN }}"
+                automatic_release_tag: "8.0.${{ github.run_number }}"
+                prerelease: false
+                files: "artifact/*"
