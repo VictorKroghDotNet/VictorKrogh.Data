@@ -35,8 +35,8 @@ jobs:
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v2
           with:
-            name: ${{ env.csproj_name }}
-            path: "${{ env.csproj_name }}/bin/${{ env.configuration }}/*.nupkg"
+            name: Artifacts
+            path: "**.nupkg"
             
     publish:
         runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
             - name: Download NuGet Package Artifact
               uses: actions/download-artifact@v3.0.2
               with:
-                name: ${{ env.csproj_name }}
+                name: Artifacts
                 path: artifact
   
             - name: Prep packages
