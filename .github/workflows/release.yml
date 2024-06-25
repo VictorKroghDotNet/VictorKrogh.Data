@@ -30,8 +30,7 @@ jobs:
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
         - name: Pack
-          run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
-          working-directory: "VictorKrogh.Data"
+          run: dotnet pack "VictorKrogh.Data/VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
       
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v2
@@ -53,8 +52,7 @@ jobs:
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
         - name: Pack
-          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
-          working-directory: "VictorKrogh.Data"
+          run: dotnet pack "VictorKrogh.Data/VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
       
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v2
