@@ -26,11 +26,9 @@ jobs:
 
         - name: Pack "VictorKrogh.Data"
           run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
-          working-directory: "VictorKrogh.Data"
       
         - name: Pack "VictorKrogh.Data.EntityFrameworkCore"
           run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
-          working-directory: "VictorKrogh.Data"
 
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v2
