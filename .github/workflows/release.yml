@@ -8,19 +8,15 @@ env:
   configuration: Release
 
 jobs:
-    checkout:
+    build:
         runs-on: ubuntu-latest
+        needs: checkout
 
         steps:
         - uses: actions/checkout@v4
           with:
             fetch-depth: 0
 
-    build-data:
-        runs-on: ubuntu-latest
-        needs: checkout
-
-        steps:
         - name: Setup .NET
           uses: actions/setup-dotnet@v3
           with:
@@ -30,30 +26,13 @@ jobs:
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
         - name: Pack
-          run: dotnet pack "VictorKrogh.Data/VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
+          run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
+          working-directory: "VictorKrogh.Data"
       
-        - name: Upload Build Artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: ${{ env.csproj_name }}
-            path: "${{ env.csproj_name }}/bin/${{ env.configuration }}/*.nupkg"
-
-    build-data-efcore:
-        runs-on: ubuntu-latest
-        needs: checkout
-
-        steps:
-        - name: Setup .NET
-          uses: actions/setup-dotnet@v3
-          with:
-            dotnet-version: 8.0.1xx
-
-        - name: Add Github Package Registry
-          run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
-
         - name: Pack
-          run: dotnet pack "VictorKrogh.Data/VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
-      
+          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
+          working-directory: "VictorKrogh.Data"
+
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v2
           with:
@@ -62,7 +41,7 @@ jobs:
             
     publish:
         runs-on: ubuntu-latest
-        needs: [build-data, build-data-efcore]
+        needs: build
 
         steps:
             - name: Download NuGet Package Artifact
