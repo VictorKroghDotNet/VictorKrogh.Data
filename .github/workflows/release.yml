@@ -22,6 +22,9 @@ jobs:
           with:
             dotnet-version: 8.0.1xx
 
+        - name: Setup output directory
+          run: mkdir -p ${{ env.output_path }}
+
         - name: Add Github Package Registry
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
@@ -35,6 +38,9 @@ jobs:
 
         - name: Test
           run: "ls -l"
+
+        - name: Test
+          run: "ls output -l"
 
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v2
