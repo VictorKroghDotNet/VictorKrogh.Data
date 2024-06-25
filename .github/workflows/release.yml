@@ -24,8 +24,13 @@ jobs:
         - name: Add Github Package Registry
           run: dotnet nuget add source --username "VictorKroghDotNet" --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/VictorKroghDotNet/index.json"
 
+        - name: Test
+          run: |
+            echo "ls -l"
+
         - name: Pack "VictorKrogh.Data"
           run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
+          working-directory: "VictorKrogh.Data"
       
         - name: Pack "VictorKrogh.Data.EntityFrameworkCore"
           run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} -p:BuildNumber="${{ github.run_number }}"
