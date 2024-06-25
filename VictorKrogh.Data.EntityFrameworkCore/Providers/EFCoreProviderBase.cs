@@ -32,6 +32,19 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
         return await dbContext.Database.SqlQueryRaw<TModel>(sql, parameters).SingleOrDefaultAsync();
     }
 
+    public ValueTask<TModel?> GetAsync<TModel, TKey>(TKey key)
+        where TModel : EFCoreModel
+        where TKey : notnull
+    {
+        return dbContext.FindAsync<TModel>(key);
+    }
+
+    [Obsolete("Not implemented for EntityFrameworkCore. Use QueryAsync instead.", true)]
+    public ValueTask<IEnumerable<TModel?>> GetAllAsync<TModel>() where TModel : EFCoreModel
+    {
+        throw new NotImplementedException();
+    }
+
     public async ValueTask<bool> InsertAsync<TModel>(TModel model) where TModel : EFCoreModel
     {
         return (await dbContext.AddAsync<TModel>(model)).State == EntityState.Added;
