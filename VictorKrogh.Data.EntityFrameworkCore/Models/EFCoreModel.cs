@@ -85,10 +85,12 @@ public class EFCoreModel
             return false;
         }
 
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if (this == obj)
         {
             return true;
         }
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
 
         if (GetType() != obj.GetType())
         {
