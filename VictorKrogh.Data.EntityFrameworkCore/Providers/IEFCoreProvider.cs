@@ -1,7 +1,13 @@
-﻿using VictorKrogh.Data.EntityFrameworkCore.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VictorKrogh.Data.EntityFrameworkCore.Models;
 using VictorKrogh.Data.Providers;
 
 namespace VictorKrogh.Data.EntityFrameworkCore.Providers;
+
+public interface IEFCoreProvider<TDbContext> : IEFCoreProvider where TDbContext : DbContext
+{
+    TDbContext DbContext { get; }
+}
 
 public interface IEFCoreProvider : IProvider
 {
