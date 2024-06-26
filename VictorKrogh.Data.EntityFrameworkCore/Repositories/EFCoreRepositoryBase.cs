@@ -4,7 +4,7 @@ using VictorKrogh.Data.Repositories;
 
 namespace VictorKrogh.Data.EntityFrameworkCore.Repositories;
 
-public abstract class DbRepositoryBase(IEFCoreProvider provider) : RepositoryBase<IEFCoreProvider>(provider)
+public abstract class EFCoreRepositoryBase(IEFCoreProvider provider) : RepositoryBase<IEFCoreProvider>(provider)
 {
     protected async ValueTask<int> ExecuteAsync(string sql, params object[] parameters)
     {
@@ -12,7 +12,7 @@ public abstract class DbRepositoryBase(IEFCoreProvider provider) : RepositoryBas
     }
 }
 
-public abstract class DbRepositoryBase<TModel, TKey>(IEFCoreProvider provider) : DbReadOnlyRepositoryBase<TModel, TKey>(provider), IRepository<TModel, TKey>
+public abstract class EFCoreRepositoryBase<TModel, TKey>(IEFCoreProvider provider) : EFCoreReadOnlyRepositoryBase<TModel, TKey>(provider), IRepository<TModel, TKey>
     where TModel : EFCoreModel
     where TKey : notnull
 {
