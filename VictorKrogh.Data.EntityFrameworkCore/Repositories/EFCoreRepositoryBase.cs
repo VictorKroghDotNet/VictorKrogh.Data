@@ -1,4 +1,5 @@
-﻿using VictorKrogh.Data.EntityFrameworkCore.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VictorKrogh.Data.EntityFrameworkCore.Models;
 using VictorKrogh.Data.EntityFrameworkCore.Providers;
 using VictorKrogh.Data.Repositories;
 
@@ -9,6 +10,11 @@ public abstract class EFCoreRepositoryBase(IEFCoreProvider provider) : Repositor
     protected async ValueTask<int> ExecuteAsync(string sql, params object[] parameters)
     {
         return await Provider.ExecuteAsync(sql, parameters);
+    }
+
+    protected DbSet<TModel> GetDbSet<TModel>() where TModel : EFCoreModel
+    {
+        return Provider.GetDbSet<TModel>();
     }
 }
 

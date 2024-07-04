@@ -11,6 +11,8 @@ public interface IEFCoreProvider<TDbContext> : IEFCoreProvider where TDbContext 
 
 public interface IEFCoreProvider : IProvider
 {
+    DbSet<TModel> GetDbSet<TModel>() where TModel : EFCoreModel;
+
     ValueTask<IEnumerable<TModel?>> QueryAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel;
     ValueTask<TModel> QueryFirstAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel;
     ValueTask<TModel?> QueryFirstOrDefaultAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel;

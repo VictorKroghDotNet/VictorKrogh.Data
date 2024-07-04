@@ -1,4 +1,5 @@
-﻿using VictorKrogh.Data.EntityFrameworkCore.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VictorKrogh.Data.EntityFrameworkCore.Models;
 using VictorKrogh.Data.EntityFrameworkCore.Providers;
 using VictorKrogh.Data.Repositories;
 
@@ -6,6 +7,8 @@ namespace VictorKrogh.Data.EntityFrameworkCore.Repositories;
 
 public abstract class EFCoreReadOnlyRepositoryBase<TModel>(IEFCoreProvider efCoreProvider) : EFCoreRepositoryBase(efCoreProvider), IReadOnlyRepository<TModel> where TModel : EFCoreModel
 {
+    protected DbSet<TModel> DbSet => GetDbSet<TModel>();
+
     protected async ValueTask<IEnumerable<TModel?>> QueryAsync(string sql, params object[] parameters)
     {
         return await Provider.QueryAsync<TModel>(sql, parameters);

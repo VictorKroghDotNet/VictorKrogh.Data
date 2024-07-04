@@ -14,6 +14,11 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 {
     protected TDbContext Context => dbContext;
 
+    public DbSet<TModel> GetDbSet<TModel>() where TModel : EFCoreModel
+    {
+        return Context.Set<TModel>();
+    }
+
     public async ValueTask<IEnumerable<TModel?>> QueryAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel
     {
         return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).ToArrayAsync();
