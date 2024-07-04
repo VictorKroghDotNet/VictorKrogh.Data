@@ -76,4 +76,14 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
     {
         return await Context.Database.ExecuteSqlRawAsync(sql, parameters);
     }
+
+    public override void Commit()
+    {
+        Context.Database.CommitTransaction();
+    }
+
+    public override void Rollback()
+    {
+        Context.Database.RollbackTransaction();
+    }
 }
