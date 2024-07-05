@@ -4,12 +4,22 @@ using System.Data;
 
 namespace VictorKrogh.Data.EntityFrameworkCore;
 
-public sealed class EFCoreUnitOfWorkFactory<TDbContext>(IServiceProvider serviceProvider) : IUnitOfWorkFactory where TDbContext : DbContext
+public interface IEFCoreUnitOfWorkFactory<TDbContext> : IUnitOfWorkFactory where TDbContext : DbContext
 {
-    public IUnitOfWork CreateUnitOfWork(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+    IEFCoreUnitOfWork<TDbContext> CreateEFCoreUnitOfWork(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
+}
+
+public sealed class EFCoreUnitOfWorkFactory<TDbContext>(IServiceProvider serviceProvider) : IEFCoreUnitOfWorkFactory<TDbContext> where TDbContext : DbContext
+{
+    public IEFCoreUnitOfWork<TDbContext> CreateEFCoreUnitOfWork(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
     {
         var dbContext = serviceProvider.GetRequiredService<TDbContext>();
 
         return new EFCoreUnitOfWork<TDbContext>(serviceProvider, dbContext, isolationLevel);
+    }
+
+    public IUnitOfWork CreateUnitOfWork(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+    {
+        return CreateEFCoreUnitOfWork(isolationLevel);
     }
 }
