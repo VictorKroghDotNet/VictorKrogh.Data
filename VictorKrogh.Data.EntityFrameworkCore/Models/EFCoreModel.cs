@@ -25,8 +25,8 @@ public class EFCoreModel
     {
         Type type2 = type;
         return DatabaseGeneratedProperties.GetOrAdd(type2.TypeHandle, (typeHandle) => (from p in type2.GetProperties()
-                                                                                                         where p.GetCustomAttributes<DatabaseGeneratedAttribute>(inherit: true).Any((a) => a.DatabaseGeneratedOption != DatabaseGeneratedOption.None)
-                                                                                                         select p).ToArray());
+                                                                                       where p.GetCustomAttributes<DatabaseGeneratedAttribute>(inherit: true).Any((a) => a.DatabaseGeneratedOption != DatabaseGeneratedOption.None)
+                                                                                       select p).ToArray());
     }
 
     private static IEnumerable<PropertyInfo> GetProperties(Type type)
@@ -39,16 +39,16 @@ public class EFCoreModel
     {
         Type type2 = type;
         return KeyProperties.GetOrAdd(type2.TypeHandle, (typeHandle) => (from p in type2.GetProperties()
-                                                                                           where p.GetCustomAttributes<KeyAttribute>(inherit: true).Any()
-                                                                                           select p).ToArray());
+                                                                         where p.GetCustomAttributes<KeyAttribute>(inherit: true).Any()
+                                                                         select p).ToArray());
     }
 
     private static IEnumerable<PropertyInfo> GetNotMappedProperties(Type type)
     {
         Type type2 = type;
         return NotMappedProperties.GetOrAdd(type2.TypeHandle, (typeHandle) => (from p in type2.GetProperties()
-                                                                                                 where p.GetCustomAttributes<NotMappedAttribute>(inherit: true).Any()
-                                                                                                 select p).ToArray());
+                                                                               where p.GetCustomAttributes<NotMappedAttribute>(inherit: true).Any()
+                                                                               select p).ToArray());
     }
 
     private static object? GetDefaultValue(Type type)

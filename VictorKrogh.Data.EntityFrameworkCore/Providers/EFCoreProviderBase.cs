@@ -130,7 +130,7 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 
     public override void Commit()
     {
-        if(transaction == null)
+        if (transaction == null)
         {
             return;
         }
@@ -141,7 +141,7 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 
     public override void Rollback()
     {
-        if(transaction == null)
+        if (transaction == null)
         {
             return;
         }
@@ -151,9 +151,9 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 
     protected override void DisposeManagedState()
     {
-        if(transaction != null)
+        if (transaction != null)
         {
-            if(!isCommitted)
+            if (!isCommitted)
             {
                 Rollback();
             }
@@ -161,9 +161,9 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
             transaction.Dispose();
         }
 
-        if(connection != null)
+        if (connection != null)
         {
-            if(connection.State != ConnectionState.Closed)
+            if (connection.State != ConnectionState.Closed)
             {
                 connection.Close();
             }

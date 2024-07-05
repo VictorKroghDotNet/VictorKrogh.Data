@@ -6,7 +6,7 @@ using VictorKrogh.Data.Providers;
 
 namespace VictorKrogh.Data.EntityFrameworkCore.Providers;
 
-public interface IEFCoreProviderFactory<TProvider, TDbContext> : IProviderFactory<TProvider> 
+public interface IEFCoreProviderFactory<TProvider, TDbContext> : IProviderFactory<TProvider>
     where TProvider : IEFCoreProvider
     where TDbContext : DbContext
 {
