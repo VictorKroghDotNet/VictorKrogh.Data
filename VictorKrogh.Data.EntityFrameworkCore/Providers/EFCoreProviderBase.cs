@@ -14,11 +14,6 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 {
     protected TDbContext Context => dbContext;
 
-    protected virtual IDbConnection CreateConnection()
-    {
-        return Context.Database.GetDbConnection();
-    }
-
     public DbSet<TModel> GetDbSet<TModel>() where TModel : EFCoreModel
     {
         return Context.Set<TModel>();
