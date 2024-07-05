@@ -135,7 +135,9 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
             return;
         }
 
-        transaction.Commit();
+        var ct = Context.Database.UseTransaction((DbTransaction)Transaction) ?? Context.Database.CurrentTransaction;
+
+        ct?.Commit();
         isCommitted = true;
     }
 
@@ -146,7 +148,9 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
             return;
         }
 
-        transaction.Rollback();
+        var ct = Context.Database.UseTransaction((DbTransaction)Transaction) ?? Context.Database.CurrentTransaction;
+
+        ct?.Rollback();
     }
 
     protected override void DisposeManagedState()
