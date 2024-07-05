@@ -26,34 +26,34 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 
     public async ValueTask<IEnumerable<TModel?>> QueryAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel
     {
-        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).ToArrayAsync().ConfigureAwait(false);
+        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).ToArrayAsync().ConfigureAwait(true);
     }
 
     public async ValueTask<TModel> QueryFirstAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel
     {
-        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).FirstAsync().ConfigureAwait(false);
+        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).FirstAsync().ConfigureAwait(true);
     }
 
     public async ValueTask<TModel?> QueryFirstOrDefaultAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel
     {
-        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).FirstOrDefaultAsync().ConfigureAwait(false);
+        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).FirstOrDefaultAsync().ConfigureAwait(true);
     }
 
     public async ValueTask<TModel> QuerySingleAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel
     {
-        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).SingleAsync().ConfigureAwait(false);
+        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).SingleAsync().ConfigureAwait(true);
     }
 
     public async ValueTask<TModel?> QuerySingleOrDefaultAsync<TModel>(string sql, params object[] parameters) where TModel : EFCoreModel
     {
-        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).SingleOrDefaultAsync().ConfigureAwait(false);
+        return await Context.Database.SqlQueryRaw<TModel>(sql, parameters).SingleOrDefaultAsync().ConfigureAwait(true);
     }
 
     public async ValueTask<TModel?> GetAsync<TModel, TKey>(TKey key)
         where TModel : EFCoreModel
         where TKey : notnull
     {
-        return await Context.FindAsync<TModel>(key).ConfigureAwait(false);
+        return await Context.FindAsync<TModel>(key).ConfigureAwait(true);
     }
 
     [Obsolete("Not implemented for EntityFrameworkCore. Use QueryAsync instead.", true)]
@@ -64,7 +64,7 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 
     public async ValueTask<bool> InsertAsync<TModel>(TModel model) where TModel : EFCoreModel
     {
-        return (await Context.AddAsync<TModel>(model).ConfigureAwait(false)).State == EntityState.Added;
+        return (await Context.AddAsync<TModel>(model).ConfigureAwait(true)).State == EntityState.Added;
     }
 
     public async ValueTask<bool> UpdateAsync<TModel>(TModel model) where TModel : EFCoreModel
@@ -79,7 +79,7 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
 
     public async ValueTask<int> ExecuteAsync(string sql, params object[] parameters)
     {
-        return await Context.Database.ExecuteSqlRawAsync(sql, parameters).ConfigureAwait(false);
+        return await Context.Database.ExecuteSqlRawAsync(sql, parameters).ConfigureAwait(true);
     }
 
     public override void Commit()
