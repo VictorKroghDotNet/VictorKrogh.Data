@@ -166,7 +166,7 @@ public class EFCoreModel : IModel
         return base.GetHashCode();
     }
 
-    public static bool operator ==(EFCoreModel left, EFCoreModel right)
+    public static bool operator ==(EFCoreModel? left, EFCoreModel? right)
     {
         if (Equals(left, null))
         {
@@ -176,7 +176,7 @@ public class EFCoreModel : IModel
         return left.Equals(right);
     }
 
-    public static bool operator !=(EFCoreModel left, EFCoreModel right)
+    public static bool operator !=(EFCoreModel? left, EFCoreModel? right)
     {
         return !(left == right);
     }
