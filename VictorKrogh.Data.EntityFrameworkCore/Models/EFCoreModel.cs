@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
+using VictorKrogh.Data.Models;
 
 namespace VictorKrogh.Data.EntityFrameworkCore.Models;
 
-public class EFCoreModel
+public class EFCoreModel : IModel
 {
     private static readonly ConcurrentDictionary<RuntimeTypeHandle, IEnumerable<PropertyInfo>> DatabaseGeneratedProperties = new ConcurrentDictionary<RuntimeTypeHandle, IEnumerable<PropertyInfo>>();
 

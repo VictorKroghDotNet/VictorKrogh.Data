@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VictorKrogh.Data.EntityFrameworkCore.Models;
 using VictorKrogh.Data.EntityFrameworkCore.Providers;
+using VictorKrogh.Data.Models;
 using VictorKrogh.Data.Repositories;
 
 namespace VictorKrogh.Data.EntityFrameworkCore.Repositories;
@@ -12,14 +13,14 @@ public abstract class EFCoreRepositoryBase(IEFCoreProvider provider) : Repositor
         return await Provider.ExecuteAsync(sql, parameters);
     }
 
-    protected DbSet<TModel> GetDbSet<TModel>() where TModel : EFCoreModel
+    protected DbSet<TModel> GetDbSet<TModel>() where TModel : class, IModel
     {
         return Provider.GetDbSet<TModel>();
     }
 }
 
 public abstract class EFCoreRepositoryBase<TModel, TKey>(IEFCoreProvider provider) : EFCoreReadOnlyRepositoryBase<TModel, TKey>(provider), IRepository<TModel, TKey>
-    where TModel : EFCoreModel
+    where TModel : class, IModel
     where TKey : notnull
 {
     public async virtual ValueTask<bool> AddAsync(TModel model)

@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VictorKrogh.Data.EntityFrameworkCore.Models;
 using VictorKrogh.Data.EntityFrameworkCore.Providers;
+using VictorKrogh.Data.Models;
 using VictorKrogh.Data.Repositories;
 
 namespace VictorKrogh.Data.EntityFrameworkCore.Repositories;
 
-public abstract class EFCoreReadOnlyRepositoryBase<TModel>(IEFCoreProvider efCoreProvider) : EFCoreRepositoryBase(efCoreProvider), IReadOnlyRepository<TModel> where TModel : EFCoreModel
+public abstract class EFCoreReadOnlyRepositoryBase<TModel>(IEFCoreProvider efCoreProvider) : EFCoreRepositoryBase(efCoreProvider), IReadOnlyRepository<TModel> where TModel : class, IModel
 {
     protected DbSet<TModel> DbSet => GetDbSet<TModel>();
 
@@ -56,7 +57,7 @@ public abstract class EFCoreReadOnlyRepositoryBase<TModel>(IEFCoreProvider efCor
 }
 
 public abstract class EFCoreReadOnlyRepositoryBase<TModel, TKey>(IEFCoreProvider efCoreProvider) : EFCoreReadOnlyRepositoryBase<TModel>(efCoreProvider), IReadOnlyRepository<TModel, TKey>
-    where TModel : EFCoreModel
+    where TModel : class, IModel
     where TKey : notnull
 {
     public async ValueTask<TModel?> GetAsync(TKey key)
