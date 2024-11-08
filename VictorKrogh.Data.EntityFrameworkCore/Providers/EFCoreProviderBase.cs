@@ -51,7 +51,6 @@ public abstract class EFCoreProviderBase<TDbContext>(IsolationLevel isolationLev
         return await Context.FindAsync<TModel>(key).ConfigureAwait(true);
     }
 
-    [Obsolete("Not implemented for EntityFrameworkCore. Use QueryAsync instead.", true)]
     public async ValueTask<IEnumerable<TModel?>> GetAllAsync<TModel>() where TModel : class, IModel
     {
         return await GetDbSet<TModel>().ToArrayAsync();

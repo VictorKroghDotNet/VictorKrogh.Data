@@ -20,11 +20,6 @@ public interface IEFCoreProvider : IProvider
     ValueTask<TModel?> QuerySingleOrDefaultAsync<TModel>(string sql, params object[] parameters) where TModel : class, IModel;
 
     ValueTask<TModel?> GetAsync<TModel, TKey>(TKey key) where TModel : class, IModel where TKey : notnull;
-
-    /// <summary>
-    /// Not implemented for EntityFrameworkCore. Use QueryAsync instead.
-    /// </summary>
-    [Obsolete("Not implemented for EntityFrameworkCore. Use QueryAsync instead.", true)]
     ValueTask<IEnumerable<TModel?>> GetAllAsync<TModel>() where TModel : class, IModel;
 
     ValueTask<bool> InsertAsync<TModel>(TModel model) where TModel : class, IModel;

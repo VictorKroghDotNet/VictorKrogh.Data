@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VictorKrogh.Data", "VictorKrogh.Data\VictorKrogh.Data.csproj", "{5FD5344B-3450-40F4-A305-8892DC1DA144}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictorKrogh.Data.EntityFrameworkCore", "VictorKrogh.Data.EntityFrameworkCore\VictorKrogh.Data.EntityFrameworkCore.csproj", "{5E5F31AD-DDC7-4A24-87D8-AE4AC4440AD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VictorKrogh.Data.EntityFrameworkCore", "VictorKrogh.Data.EntityFrameworkCore\VictorKrogh.Data.EntityFrameworkCore.csproj", "{5E5F31AD-DDC7-4A24-87D8-AE4AC4440AD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictorKrogh.Data.Abstractions", "VictorKrogh.Data.Abstractions\VictorKrogh.Data.Abstractions.csproj", "{A55193BF-9A9F-49E3-96BB-781EA13BB818}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5E5F31AD-DDC7-4A24-87D8-AE4AC4440AD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E5F31AD-DDC7-4A24-87D8-AE4AC4440AD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E5F31AD-DDC7-4A24-87D8-AE4AC4440AD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A55193BF-9A9F-49E3-96BB-781EA13BB818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55193BF-9A9F-49E3-96BB-781EA13BB818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55193BF-9A9F-49E3-96BB-781EA13BB818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55193BF-9A9F-49E3-96BB-781EA13BB818}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
