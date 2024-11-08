@@ -18,7 +18,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>VictorKrogh.Data</PackageId>
+		<PackageId>VictorKrogh.Data.Abstractions</PackageId>
 		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/VictorKroghDotNet/VictorKrogh.Data</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
