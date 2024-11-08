@@ -33,7 +33,7 @@ jobs:
             dotnet-version: 8.0.1xx
 
         - name: Build
-          run: dotnet build --configuration ${{ env.configuration }} /p:Version=${VERSION}"
+          run: dotnet build --configuration ${{ env.configuration }} /p:Version=${VERSION}
           working-directory: "VictorKrogh.Data.Abstractions"
           
         - name: Pack "VictorKrogh.Data.Abstractions"
