@@ -37,15 +37,15 @@ jobs:
           working-directory: "VictorKrogh.Data.Abstractions"
           
         - name: Pack "VictorKrogh.Data.Abstractions"
-          run: dotnet pack "VictorKrogh.Data.Abstractions.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" /p:Version=${VERSION}"
+          run: dotnet pack "VictorKrogh.Data.Abstractions.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" /p:Version=${VERSION}
           working-directory: "VictorKrogh.Data.Abstractions"
 
         - name: Pack "VictorKrogh.Data"
-          run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" /p:Version=${VERSION}"
+          run: dotnet pack "VictorKrogh.Data.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" /p:Version=${VERSION}
           working-directory: "VictorKrogh.Data"
       
         - name: Pack "VictorKrogh.Data.EntityFrameworkCore"
-          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" /p:Version=${VERSION}"
+          run: dotnet pack "VictorKrogh.Data.EntityFrameworkCore.csproj" --configuration ${{ env.configuration }} --output "${{ github.workspace}}/${{ env.output_path }}" /p:Version=${VERSION}
           working-directory: "VictorKrogh.Data.EntityFrameworkCore"
 
         - name: Upload Build Artifact
