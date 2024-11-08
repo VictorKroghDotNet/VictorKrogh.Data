@@ -8,19 +8,26 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
-		<BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
-		<PackageVersion>8.0.$(BuildNumber)-dev-build</PackageVersion>
+		<Version Condition="'$(Version)' == ''">0</Version>
+		<PackageVersion>$(Version)-dev-build</PackageVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
-		<BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
-		<PackageVersion>8.0.$(BuildNumber)</PackageVersion>
+		<Version Condition="'$(Version)' == ''">0</Version>
+		<PackageVersion>$(Version)</PackageVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<PackageId>VictorKrogh.Data</PackageId>
+		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/VictorKroghDotNet/VictorKrogh.Data</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
 		<PackageReference Include="VictorKrogh.Disposable" Version="8.0.0.1" />
